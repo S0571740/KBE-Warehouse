@@ -139,4 +139,19 @@ public class Component {
     public void setKomponententyp(String komponententyp) {
         this.komponententyp = komponententyp;
     }
+
+    @Override
+    public String toString() {
+        return getKomponententyp() + ", " + 
+                getName() + ", " + 
+                getMaterial() + ", " + 
+                getHerkunft() + ", " + 
+                getFarbe() + ", " + 
+                getHersteller() + ", " + 
+                getForm() + ", " + 
+                getGebrauchszustand() + ", " + 
+                getPreis() + ", " + 
+                getVerfuegbarkeit() + ", " + 
+                getKlangauswirkung() + ", ";
+    }
 }
