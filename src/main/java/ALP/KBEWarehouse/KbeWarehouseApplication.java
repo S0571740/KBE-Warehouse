@@ -5,9 +5,11 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import com.google.gson.Gson;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.ClassPathResource;
@@ -29,14 +31,22 @@ public class KbeWarehouseApplication {
 
 	@GetMapping("/components")
 	public String getComponents(@RequestParam(value = "id", defaultValue = "") String id) {
+		Gson gson=new Gson();
 		List<Component> components = CSVParser.parse();
-		String returnString = "";
 		if (!id.equals("")) {
 			components = components.stream().filter(cmp -> cmp.getKomponententyp().equals(id)).toList();
 		}
-		for(Component cmp : components) {
-			returnString += cmp.toString();
-		}
+		String returnString=gson.toJson(components);
+		return returnString;
+	}
+
+	@GetMapping("/components/{id}")
+	public String getComponentWithId(@PathVariable("id") int objectId)	{
+		Gson gson=new Gson();
+		Component component=null;
+		List<Component> components = CSVParser.parse();
+		component = components.get(objectId);
+		String returnString=gson.toJson(component);
 		return returnString;
 	}
 }
