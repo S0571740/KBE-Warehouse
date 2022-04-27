@@ -30,10 +30,13 @@ public class KbeWarehouseApplication {
 	@GetMapping("/components")
 	public String getComponents(@RequestParam(value = "id", defaultValue = "") String id) {
 		List<Component> components = CSVParser.parse();
-		if (id.equals("")) {
-			return components.toString();
-		} else {
-			return components.stream().filter(cmp -> cmp.getKomponententyp().equals(id)).toList().toString();
+		String returnString = "";
+		if (!id.equals("")) {
+			components = components.stream().filter(cmp -> cmp.getKomponententyp().equals(id)).toList();
 		}
+		for(Component cmp : components) {
+			returnString += cmp.toString();
+		}
+		return returnString;
 	}
 }
