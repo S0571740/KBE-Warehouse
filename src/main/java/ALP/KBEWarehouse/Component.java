@@ -142,7 +142,7 @@ public class Component {
 
     @Override
     public String toString() {
-        return "[ " +getKomponententyp() + ", " + 
+        return  getKomponententyp() + ", " +
                 getName() + ", " + 
                 getMaterial() + ", " + 
                 getHerkunft() + ", " + 
@@ -152,6 +152,6 @@ public class Component {
                 getGebrauchszustand() + ", " + 
                 getPreis() + ", " + 
                 getVerfuegbarkeit() + ", " + 
-                getKlangauswirkung() + ", "+ " ]";
+                getKlangauswirkung();
     }
 }
