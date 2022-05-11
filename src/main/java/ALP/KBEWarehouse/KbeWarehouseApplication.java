@@ -36,22 +36,4 @@ public class KbeWarehouseApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(KbeWarehouseApplication.class, args);
 	}
-
-	@GetMapping("/")
-	public String helloWorld(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-
-	@GetMapping("/components")
-	public String getComponents(@RequestParam(value = "id", defaultValue = "") String id) {
-		List<Component> components = CSVParser.parse();
-		String returnString = "";
-		if (!id.equals("")) {
-			components = components.stream().filter(cmp -> cmp.getKomponententyp().equals(id)).toList();
-		}
-		for(Component cmp : components) {
-			returnString += cmp.toString();
-		}
-		return returnString;
-	}
 }

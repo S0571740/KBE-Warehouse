@@ -1,17 +1,36 @@
 package ALP.KBEWarehouse;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "components")
 public class Component {
     
+    @Column(name = "komponententyp")
     private String komponententyp;
+    @Id
+    @Column(name = "name")
     private String name;
+    @Column(name = "material")
     private String material;
+    @Column(name = "herkunft")
     private String herkunft;
+    @Column(name = "farbe")
     private String farbe;
+    @Column(name = "hersteller")
     private String hersteller;
+    @Column(name = "form")
     private String form;
+    @Column(name = "gebrauchszustand")
     private String gebrauchszustand;
+    @Column(name = "preis")
     private String preis;
+    @Column(name = "verfuegbarkeit")
     private String verfuegbarkeit;
+    @Column(name = "klangauswirkung")
     private String klangauswirkung;
 
     public Component(){
