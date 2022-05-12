@@ -18,7 +18,6 @@ public class ComponentServiceImplementation implements ComponentService {
 
     @Autowired
     ComponentRepository componentRepository;
-    List<Component> componentList = parseIterableToList(componentRepository.findAll());
 
     @Override
     public void readCSV(MultipartFile file) {
@@ -49,7 +48,7 @@ public class ComponentServiceImplementation implements ComponentService {
     
     @Override
     public Component getComponentByName(String name) {
-        List<Component> toReturn = List.copyOf(componentList);
+        List<Component> toReturn = List.copyOf(parseIterableToList(componentRepository.findAll()));
         return toReturn.stream()
                 .filter(comp -> comp.getName().equals(name))
                 .collect(Collectors.toList())
@@ -58,12 +57,12 @@ public class ComponentServiceImplementation implements ComponentService {
 
     @Override
     public List<Component> getComponents() {
-        return componentList;
+        return parseIterableToList(componentRepository.findAll());
     }
 
     @Override
     public List<Component> getComponentsOfType(String type) {
-        List<Component> toReturn = List.copyOf(componentList);
+        List<Component> toReturn = List.copyOf(parseIterableToList(componentRepository.findAll()));
         return toReturn.stream()
                 .filter(comp -> comp.getKomponententyp().equals(type))
                 .collect(Collectors.toList());
@@ -71,7 +70,7 @@ public class ComponentServiceImplementation implements ComponentService {
 
     @Override
     public List<Component> getComponentOfTypeAndName(String typeKey, String typeValue) {
-        List<Component> toReturn = List.copyOf(componentList);
+        List<Component> toReturn = List.copyOf(parseIterableToList(componentRepository.findAll()));
         switch (typeKey) {
             case "komponententyp":
                 return toReturn.stream()
