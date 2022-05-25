@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Button from "./Button";
 
-const MainScreen = ({components}) => {
+const MainScreen = ({loggedInUser,logOut,components}) => {
 
     const [allProductComponentsAreShown, setAllProductComponentsAreShown] = useState(false)
 
@@ -10,7 +10,8 @@ const MainScreen = ({components}) => {
         <div>
             <div className="header">
                 <h1>Guitarbuilder</h1>
-                <Button text={'log out'}/>
+                <h2>Welcome {loggedInUser}</h2>
+                <Button text={'log out'} onClick={logOut}/>
             </div>
             <Button text={'Unsere Produkte'}/>
             <Button text={'Alle Produktkomponenten anzeigen'} onClick={() => {

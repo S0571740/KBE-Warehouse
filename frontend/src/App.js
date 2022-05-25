@@ -1,8 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import MainScreen from "./components/MainScreen";
+import LogInScreen from "./components/LogInScreen";
 
 const App = () => {
-  const [components, setComponents] = useState("");
+  const [users, setUsers] = useState([{
+        username: 'someUser',
+        password: 'somePassword'
+    },
+    {
+        username: 'admin',
+        password: 'adminPassword'
+    }])
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedInUser, setLoggedInUser] = useState(
+      {
+          username: '',
+      }
+  )
+
+  const [components, setComponents] = useState('');
 
   useEffect(() => {
     fetch('/components')
@@ -13,7 +30,14 @@ const App = () => {
   },[])
   return (
       <div>
-          <MainScreen components={components}/>
+          {loggedIn && <MainScreen loggedInUser={loggedInUser}
+                                    logOut={() => {
+                                        setLoggedIn(false)
+                                        setLoggedInUser({username: '',})
+                                        }
+                                    }
+                                    components={components}/>}
+          {!loggedIn && <LogInScreen users={users} setLoggedIn={setLoggedIn} setLoggedInUser={setLoggedInUser}/>}
       </div>
   )
 }
