@@ -27,4 +27,10 @@ public interface ComponentService {
      * @return a list of all components of given type
      */
     public List<Component> getComponentsOfType(String type);
+    /**
+     * gets the component with matching id
+     * @param id the id of the component
+     * @return the component
+     */
+    public Component getComponentById(int id);
 }

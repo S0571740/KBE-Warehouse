@@ -1,12 +1,11 @@
 package ALP.KBEWarehouse;
 
 import java.util.List;
-
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -24,18 +23,34 @@ public class ComponentController {
      * @param id the type of the component
      * @return all components (of given type)
      */
+
     @GetMapping("/components")
     public String getComponents(@RequestParam(value = "id", defaultValue = "") String id) {
-        
-        List<Component> components = CSVParser.parse();
-        String returnString = "";
+        Gson gson=new Gson();
+        List<Component> components = null;
         if (!id.equals("")) {
             components = componentService.getComponentsOfType(id);
-        }
-        for (Component cmp : components) {
-            returnString += cmp.toString();
-        }
+        } else components=componentService.getComponents();
+        String returnString=gson.toJson(components);
         return returnString;
+    }
+
+    @GetMapping("/components/{id}")
+    public ResponseEntity<String> getComponentWithId(@PathVariable("id") int objectId)	{
+        Gson gson=new Gson();
+        Component component=null;
+        try	{
+            component=componentService.getComponentById(objectId);
+        } catch(IndexOutOfBoundsException e)	{
+            return new ResponseEntity<>(
+                    "component with specified id doesnt exist",
+                    HttpStatus.NOT_FOUND
+            );
+        }
+        return new ResponseEntity<>(
+                gson.toJson(component),
+                HttpStatus.OK
+        );
     }
 
     /**
