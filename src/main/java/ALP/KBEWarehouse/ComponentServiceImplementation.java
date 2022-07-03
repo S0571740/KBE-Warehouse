@@ -49,6 +49,14 @@ public class ComponentServiceImplementation implements ComponentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Component getComponentById(int id)   {
+        List<Component> toReturn = List.copyOf(parseIterableToList(componentRepository.findAll()));
+        return toReturn.stream()
+                .collect(Collectors.toList())
+                .get(id);
+    }
+
     /**
      * creates a list from a iterable. Usefull for parsing of componentsRepository
      * @param toParse the iterable to parse
